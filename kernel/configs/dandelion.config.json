@@ -1,0 +1,64 @@
+[
+  {
+    "kernelSource": {
+      "name": "Redmi9A",
+      "repo": "https://github.com/redmi-mt6765-dev/kernel",
+      "branch": "dandelion-q-oss",
+      "device": "dandelion",
+      "defconfig": "dandelion_defconfig"
+    },
+    "toolchains": [
+      {
+        "repo": "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android10-release/clang-r353983c.tar.gz",
+        "branch": "",
+        "name": "clang",
+        "binaryEnv": [
+          "bin"
+        ]
+      },
+      {
+        "repo": "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9",
+        "branch": "android10-release",
+        "name": "aarch64",
+        "binaryEnv": [
+          "bin"
+        ]
+      },
+      {
+        "repo": "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9",
+        "branch": "android10-release",
+        "name": "arm",
+        "binaryEnv": [
+          "bin"
+        ]
+      }
+    ],
+    "enableCcache": true,
+    "params": {
+      "ARCH": "arm64",
+      "CC": "clang",
+      "externalCommands": {
+        "CLANG_TRIPLE": "aarch64-linux-gnu-",
+        "CROSS_COMPILE": "aarch64-linux-android-",
+        "CROSS_COMPILE_ARM32": "arm-linux-androideabi-",
+        "LD": "ld.lld",
+        "AR": "llvm-ar",
+        "NM": "llvm-nm",
+        "OBJCOPY": "llvm-objcopy",
+        "OBJDUMP": "llvm-objdump",
+        "READELF": "llvm-readelf",
+        "OBJSIZE": "llvm-size",
+        "STRIP": "llvm-strip",
+        "LDGOLD": "aarch64-linux-gnu-ld.gold",
+        "LLVM_AR": "llvm-ar",
+        "LLVM_DIS": "llvm-dis",
+        "CONFIG_THINLTO": ""
+      }
+    },
+    "AnyKernel3": {
+      "use": true,
+      "release": true
+    },
+    "enableKernelSU": false
+  }
+]
