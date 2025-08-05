@@ -12,28 +12,27 @@ on:
   #   - cron: "0 0 * * 0"  # Weekly builds on Sunday at midnight
 
 jobs:
-
   parse-configs:
-    name: Parse Configuration Files
-    runs-on: ubuntu-latest
-    outputs:
-      CONFIGS: ${{ steps.generate-matrix.outputs.CONFIGS }}
-      BUILD_DATE: ${{ steps.build-info.outputs.date }}
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        
-      - name: Generate Build Matrix
-        id: generate-matrix
-        run: |
-          echo "CONFIGS<<EOF" >> $GITHUB_OUTPUT
-          jq -s '[.[][]]' kernel/configs/*.config.json >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+  name: Parse Configuration Files
+  runs-on: ubuntu-latest
+  outputs:
+    CONFIGS: ${{ steps.generate-matrix.outputs.CONFIGS }}
+    BUILD_DATE: ${{ steps.build-info.outputs.date }}
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
       
-      - name: Set Build Information
-        id: build-info
-        run: |
-          echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+    - name: Generate Build Matrix
+      id: generate-matrix
+      run: |
+        echo "CONFIGS<<EOF" >> $GITHUB_OUTPUT
+        jq -s '[.[][]]' kernel/configs/*.config.json >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+    
+    - name: Set Build Information
+      id: build-info
+      run: |
+        echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
 
   build-kernel:
     name: Build Kernel - ${{ matrix.CONFIG.kernelSource.name }}
