@@ -129,6 +129,11 @@ jobs:
           # Verify Python version
           ~/bin/python --version
 
+      - name: Set up pyenv shims in PATH
+        run: |
+          echo "export PATH=\"$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH\"" >> $GITHUB_ENV
+          echo "export PYENV_ROOT=\"$HOME/.pyenv\"" >> $GITHUB_ENV
+
       # Initialize ccache
       - name: 🚄 Setup ccache
         if: ${{ env.ENABLE_CCACHE == 'true' }}
