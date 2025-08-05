@@ -1,0 +1,53 @@
+name: 'Setup Kernel Build Environment'
+description: 'Installs all dependencies needed for kernel building'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Build Dependencies
+      shell: bash
+      run: |
+        sudo apt-get update
+        
+        # Core build tools and dependencies
+        sudo apt-get install -y \
+          build-essential bc flex bison libssl-dev libelf-dev \
+          zip unzip tar gzip bzip2 rar unrar lzop \
+          git ccache curl wget libarchive-tools \
+          pngcrush schedtool dpkg-dev device-tree-compiler \
+          libncurses5-dev lib32z1-dev libx11-dev libgl1-mesa-dev \
+          libxml2-utils libbz2-dev squashfs-tools \
+          gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
+        
+        # Setup Python 2.7 with pyenv
+        # Install pyenv dependencies
+        sudo apt-get install -y \
+          libreadline-dev libsqlite3-dev libffi-dev \
+          zlib1g-dev libbz2-dev liblzma-dev
+        
+        # Install pyenv
+        git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+        
+        # Setup pyenv environment
+        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+        echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+        echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
+        
+        # Make pyenv available in the current shell
+        export PYENV_ROOT="$HOME/.pyenv"
+        export PATH="$PYENV_ROOT/bin:$PATH"
+        eval "$(~/.pyenv/bin/pyenv init -)"
+        
+        # Install Python 2.7.18
+        ~/.pyenv/bin/pyenv install 2.7.18
+        
+        # Create symlink for python command
+        mkdir -p ~/bin
+        ln -sf ~/.pyenv/versions/2.7.18/bin/python ~/bin/python
+        ln -sf ~/.pyenv/versions/2.7.18/bin/pip ~/bin/pip
+        
+        # Add to PATH for current and future steps
+        echo "$HOME/bin" >> $GITHUB_PATH
+        
+        # Verify Python version
+        ~/bin/python --version

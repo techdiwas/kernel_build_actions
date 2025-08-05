@@ -1,0 +1,67 @@
+name: 'Upload Kernel Artifacts'
+description: 'Uploads kernel build artifacts to GitHub'
+
+inputs:
+  kernel_name:
+    description: 'Kernel name'
+    required: true
+  build_date:
+    description: 'Build date'
+    required: true
+  out_dir:
+    description: 'Output directory'
+    required: true
+  arch:
+    description: 'Architecture'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Upload Image
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.kernel_name }}-${{ inputs.build_date }}-Image
+        path: ${{ inputs.out_dir }}/arch/${{ inputs.arch }}/boot/Image
+        if-no-files-found: ignore
+        retention-days: 14
+
+    - name: Upload Image.gz
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.kernel_name }}-${{ inputs.build_date }}-Image.gz
+        path: ${{ inputs.out_dir }}/arch/${{ inputs.arch }}/boot/Image.gz
+        if-no-files-found: ignore
+        retention-days: 14
+        
+    - name: Upload Image.gz-dtb
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.kernel_name }}-${{ inputs.build_date }}-Image.gz-dtb
+        path: ${{ inputs.out_dir }}/arch/${{ inputs.arch }}/boot/Image.gz-dtb
+        if-no-files-found: ignore
+        retention-days: 14
+        
+    - name: Upload dtb
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.kernel_name }}-${{ inputs.build_date }}-dtb
+        path: ${{ inputs.out_dir }}/arch/${{ inputs.arch }}/boot/dtb
+        if-no-files-found: ignore
+        retention-days: 14
+        
+    - name: Upload dtbo.img
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.kernel_name }}-${{ inputs.build_date }}-dtbo.img
+        path: ${{ inputs.out_dir }}/arch/${{ inputs.arch }}/boot/dtbo.img
+        if-no-files-found: ignore
+        retention-days: 14
+        
+    - name: Upload all boot artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.kernel_name }}-${{ inputs.build_date }}-all-artifacts
+        path: ${{ inputs.out_dir }}/arch/${{ inputs.arch }}/boot/
+        if-no-files-found: warn
+        retention-days: 14
