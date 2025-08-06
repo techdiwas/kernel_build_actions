@@ -9,24 +9,24 @@
     },
     "toolchains": [
       {
-        "url": "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android10-release/clang-r353983c.tar.gz",
-        "branch": "",
-        "name": "clang-r353983c",
+        "repo": "https://github.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-5484270",
+        "branch": "9.0",
+        "name": "clang-5484270",
         "binaryEnv": [
           "bin"
         ]
       },
       {
-        "repo": "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9",
-        "branch": "android10-release",
+        "repo": "https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9",
+        "branch": "",
         "name": "aarch64",
         "binaryEnv": [
           "bin"
         ]
       },
       {
-        "repo": "https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9",
-        "branch": "android10-release",
+        "repo": "https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9",
+        "branch": "",
         "name": "arm",
         "binaryEnv": [
           "bin"
