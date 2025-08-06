@@ -71,8 +71,7 @@ jobs:
             libxml2-utils libbz2-dev squashfs-tools \
             gcc-aarch64-linux-gnu gcc-arm-linux-gnueabi
 
-      - name: 🐍 Setup Python 2.7
-        uses: actions/setup-python@v5
+      - uses: LizardByte/setup-python-action@master
         with:
           python-version: '2.7'
 
